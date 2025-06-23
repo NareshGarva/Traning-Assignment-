@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus Tracker</title>
+    <link rel="stylesheet" href="../src/output.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center h-screen">
+<form class="bg-white rounded-2xl p-3" id="myForm">
+    <div>
+        <label for="course" class="text-sm text-gray-600 block">Course :</label>
+       <select name="Course" id="course" class="border w-full p-1 rounded bg-black text-white">
+        <option value="none">-- Select Course --</option>
+        <option value="BCA">BCA</option>
+        <option value="MCA">MCA</option>
+        <option value="B.SC IT">B.SC IT</option>
+        <option value="M.SC IT">M.SC IT</option>
+       </select>
+    </div>
+
+     <div id="semester" class="hidden">
+        <label for="semesterList" class="text-sm text-gray-600 block">Semester :</label>
+       <select name="Semester" id="semesterList" class="border w-full p-1 rounded bg-black text-white">
+        <!--- list will be display dynamically -->
+       </select>
+    </div>
+</form>
+<div class="hidden bg-white rounded-2xl p-10" id="showSyllabus">
+<ol id="listItem" class="list-decimal">
+
+</ol>
+</div>
+
+    </div>
+</body>
+<script>
+    const syllabus = {
+  BCA: {
+    Semester1: [
+      "Fundamentals of Computers",
+      "Programming in C",
+      "Mathematics-I",
+      "Digital Electronics",
+      "Communication Skills"
+    ],
+    Semester2: [
+      "Data Structures",
+      "Object-Oriented Programming with C++",
+      "Mathematics-II",
+      "Operating System",
+      "Environmental Studies"
+    ],
+    Semester3: [
+      "Database Management System",
+      "Java Programming",
+      "Computer Networks",
+      "Software Engineering",
+      "Web Technology"
+    ],
+    Semester4: [
+      "Python Programming",
+      "Design and Analysis of Algorithms",
+      "Computer Architecture",
+      "Mobile Application Development",
+      "Mini Project"
+    ],
+    Semester5: [
+      "Network Security",
+      "Cloud Computing",
+      "Artificial Intelligence",
+      "Project Management",
+      "Open Elective"
+    ],
+    Semester6: [
+      "Industrial Project / Internship",
+      "Seminar",
+      "Advanced Topics in IT"
+    ]
+  },
+
+  MCA: {
+    Semester1: [
+      "Mathematical Foundations",
+      "Programming in C",
+      "Computer Organization",
+      "Data Structures",
+      "Communication Skills"
+    ],
+    Semester2: [
+      "OOP using Java",
+      "Operating System",
+      "Database Management Systems",
+      "Software Engineering",
+      "Web Programming"
+    ],
+    Semester3: [
+      "Data Communication & Networks",
+      "Design and Analysis of Algorithms",
+      "Cloud Computing",
+      "Elective-I",
+      "Mini Project"
+    ],
+    Semester4: [
+      "Machine Learning",
+      "Mobile Computing",
+      "Cyber Security",
+      "Elective-II",
+      "Major Project Phase-I"
+    ],
+    Semester5: [
+      "Big Data Analytics",
+      "Internet of Things (IoT)",
+      "Elective-III",
+      "Major Project Phase-II"
+    ],
+    Semester6: [
+      "Internship / Thesis"
+    ]
+  },
+
+  "M.Sc IT": {
+    Semester1: [
+      "Mathematical Foundations",
+      "Programming in Java",
+      "Database Systems",
+      "Computer Networks",
+      "Web Technology"
+    ],
+    Semester2: [
+      "Operating System",
+      "Advanced Java",
+      "Software Engineering",
+      "Python Programming",
+      "Mini Project"
+    ],
+    Semester3: [
+      "Cloud Computing",
+      "Machine Learning",
+      "Mobile App Development",
+      "Elective-I",
+      "Research Methodology"
+    ],
+    Semester4: [
+      "Cyber Security",
+      "Big Data Analytics",
+      "Elective-II",
+      "Dissertation / Major Project"
+    ]
+  },
+
+  "B.Sc IT": {
+    Semester1: [
+      "Basics of IT",
+      "Programming in C",
+      "Mathematics-I",
+      "Digital Logic",
+      "Communication Skills"
+    ],
+    Semester2: [
+      "Data Structures",
+      "OOP in C++",
+      "Mathematics-II",
+      "Operating System",
+      "Web Development"
+    ],
+    Semester3: [
+      "Java Programming",
+      "Database Management System",
+      "Computer Networks",
+      "Software Engineering",
+      "Mini Project"
+    ],
+    Semester4: [
+      "Python Programming",
+      "Mobile Computing",
+      "Network Security",
+      "Cloud Computing",
+      "Major Project"
+    ],
+    Semester5: [
+      "AI and ML Basics",
+      "IoT Fundamentals",
+      "Advanced Web Technologies",
+      "Elective-I",
+      "Seminar"
+    ],
+    Semester6: [
+      "Internship / Industrial Training",
+      "Project Report",
+      "Comprehensive Viva"
+    ]
+  }
+};
+
+
+
+    const myForm = document.getElementById("myForm");
+    const course = document.getElementById("course");
+    const semester = document.getElementById("semester");
+    const semesterList = document.getElementById("semesterList");
+    const listSyllabus = document.getElementById("showSyllabus");
+    const listItems = document.getElementById("listItem");
+
+    const generateSem = (sem) =>{
+        semester.classList.remove("hidden");
+        semesterList.innerHTML ='<option value="none">-- Select Semester --</option>';
+for(i=0;i<sem;i++){
+    semesterList.innerHTML +=`<option value="Semester${i+1}">Semester ${i+1}</option>`;
+}
+
+    }
+
+    const showSyllabus = () =>{
+        listSyllabus.classList.remove("hidden");
+        listItem.innerHTML= '';
+        if(syllabus[course.value] && syllabus[course.value][semesterList.value]){
+            myForm.classList.add("hidden");
+            syllabus[course.value][semesterList.value].forEach(subject => {
+                listItem.innerHTML += `<li class="font-bold">${subject}</li>`;
+            });
+        }
+    }
+
+    semesterList.addEventListener("change",()=>{
+        showSyllabus();
+    });
+
+    course.addEventListener('change',()=>{
+if(course.value == "BCA" || course.value == "B.SC IT"){
+    generateSem(6);
+}
+if(course.value == "MCA" || course.value == "M.SC IT"){
+    generateSem(4);
+}
+
+
+    })
+    
+</script>
+</html>
