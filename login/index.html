@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../src/output.css" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex justify-center items-center h-screen">
+      <form
+        class="bg-white px-6 py-4 rounded-2xl"
+        onsubmit="return validate()"
+      >
+        <h1 class="font-bold text-2xl text-center mb-3">Welcome back!</h1>
+        <div class="mb-3">
+          <label
+            class="text-sm block font-semibold text-gray-600"
+            for="username"
+            >UserName:
+          </label>
+          <input
+            class="border rounded p-1 px-3"
+            type="text"
+            name="UserName"
+            id="username"
+          />
+        </div>
+        <div class="mb-3">
+          <label
+            class="text-sm block font-semibold text-gray-600"
+            for="password"
+            >Password:
+          </label>
+          <input
+            class="border rounded p-1 px-3"
+            type="password"
+            name="Password"
+            id="password"
+          />
+        </div>
+        <input
+          class="cursor-pointer  bg-black text-white py-1 w-full rounded rounded-b-2xl transition ease-in-out duration-300 hover:bg-gray-800"
+          type="submit"
+          name="Submit"
+          id="submit"
+          value="Submit"
+        />
+        <p
+          id="showTimer"
+          class="text-center text-gray-600 mt-3 hidden"
+        >Please retry in <span id="sTime"></span> time</p>
+      </form>
+    </div>
+  </body>
+  <script>
+    const authData = [
+      {
+        userName: "nareshgarva",
+        pass: "nareshgarva@123",
+      },
+      {
+        userName: "narayan",
+        pass: "narayan@123",
+      },
+    ];
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const submitBtn = document.getElementById("submit");
+    const showTimer = document.getElementById("showTimer");
+    const sTime = document.getElementById("sTime");
+    let isUserValid = false;
+    let countInValid = 0;
+    let howFreq = 0;
+    let lastTime =0;
+    let second = 0;
+let minute = 0;
+let hours = 0;
+
+const timer = () =>{
+    
+    if(second == 0 && minute == 0 && hours == 0){
+        submitBtn.disabled = false;
+  submitBtn.classList.remove(
+  "bg-gray-200",
+  "border",
+  "border-gray-400",
+  "text-black",
+  "cursor-not-allowed"
+);
+submitBtn.classList.add("cursor-pointer", "bg-black", "text-white");
+showTimer.classList.add("hidden");
+countInValid=0;
+return false;
+    }
+    if(second == 0){
+        minute--;
+        second=59;
+    }
+    if(minute == 0 && !hours == 0){
+        hours--;
+        minute = 59;
+        second = 59;
+    }
+    second--;
+    console.log(hours+"/"+minute+"/"+second)
+    sTime.innerHTML = `${String(hours).padStart(2, "0")} : ${String(minute).padStart(2, "0")} : ${String(second).padStart(2, "0")}`;
+    setTimeout(timer,1000);
+}
+
+    const rendomTime = () =>{
+        const value =  parseInt((Math.random())*100) * howFreq;
+        if(value < 10 || lastTime > value){
+            rendomTime();
+        }
+        
+        console.log("value is good :", value);
+        console.log("last timer:", lastTime);
+        console.log("how freq :", howFreq);
+        return value;
+    }
+
+    const setTimer = () =>{
+howFreq = howFreq + 1;
+let tValue = rendomTime();
+lastTime = tValue;
+console.log(tValue);
+second = tValue;
+
+if(tValue > 60){
+    minute = parseInt(tValue/60);
+    second = parseInt(tValue%60);
+}
+if(minute > 60){
+    hours = parseInt(tValue/60);
+    minute = parseInt(tValue%60);
+}
+
+console.log("the time to tack "+hours+"hours"+minute+"minute"+second+"second");
+return timer();
+    }
+
+    const authUser = () => {
+  return authData.some((user) => {
+    return user.userName === username.value && user.pass === password.value;
+  });
+};
+
+
+
+    const validate = () => {
+      if (!username.value || !password.value) {
+        alert(`please enter ${!username ? "Username" : "Password"}`);
+        return false;
+      }
+     isUserValid = authUser();
+      if (isUserValid) {
+        alert("Login success!");
+      } else {
+        countInValid = countInValid + 1;
+        console.log("counter :", countInValid)
+        alert("Username and password is not valid");
+
+        if (countInValid === 3) {
+        submitBtn.disabled = true;
+       submitBtn.classList.add(
+  "bg-gray-200",
+  "border",
+  "border-gray-400",
+  "text-black",
+  "cursor-not-allowed"
+);
+submitBtn.classList.remove("cursor-pointer", "bg-black", "text-white");
+showTimer.classList.remove("hidden");
+        setTimer();
+      }
+
+        return false;
+      }
+
+      
+    };
+  </script>
+</html>

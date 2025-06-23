@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-200 text-white">
+    <div class="flex min-h-screen items-center justify-center">
+      <form class="my-4 rounded-xl bg-indigo-700 p-4 px-7" id="studentForm">
+        <h1 class="text-center text-3xl font-bold">Student Register</h1>
+
+        <div class="flex justify-between items-end relative my-3">
+          <p class="font-bold text-gray-100 text-sm">Personal Info.</p>
+          <hr
+            class="border border-t-1 border-gray-300 border-gray-300 w-full absolute"
+          />
+        </div>
+
+        <div class="flex gap-x-2">
+          <div>
+            <label class="block text-sm text-gray-300" for="firstName"
+              >First Name</label
+            >
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="text"
+              required
+              placeholder="First Name"
+              id="firstName"
+            />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300" for="lastName"
+              >Last Name</label
+            >
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="text"
+              required
+              placeholder="Last Name"
+              id="lastName"
+            />
+          </div>
+        </div>
+
+
+        <div>
+          <label class="block text-sm text-gray-300" for="gender">Gender</label>
+          <div class="flex items-center justify-between gap-x-2">
+            <div
+              class="rounded border border-indigo-500 bg-indigo-600 px-6 py-1"
+            >
+              <label for="male">Male</label>
+              <input type="radio" name="Gender" value="Male" id="male" />
+            </div>
+            <div
+              class="rounded border border-indigo-500 bg-indigo-600 px-6 py-1"
+            >
+              <label for="female">Female</label>
+              <input type="radio" name="Gender" value="Female" id="female" />
+            </div>
+            <div
+              class="rounded border border-indigo-500 bg-indigo-600 px-6 py-1"
+            >
+              <label for="other">Other</label>
+              <input type="radio" name="Gender" value="Other" id="other" />
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flex gap-x-2">
+          <div>
+            <label class="block text-sm text-gray-300" for="dob">DOB</label>
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="date"
+              required
+              id="dob"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-300" for="fatherName"
+              >Father's Name</label
+            >
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="text"
+              required
+              placeholder="Father's Name"
+              id="fatherName"
+            />
+          </div>
+        </div>
+
+        <div class="flex justify-between items-end relative my-3">
+          <p class="font-bold text-gray-100 text-sm">Contact Info.</p>
+          <hr
+            class="border border-t-1 border-gray-300 border-gray-300 w-full absolute"
+          />
+        </div>
+
+        <div class="flex gap-x-2">
+          <div>
+            <label class="block text-sm text-gray-300" for="email">Email</label>
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="email"
+              required
+              placeholder="example@gmail.com"
+              id="email"
+            />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300" for="mobileNumber"
+              >Mobile number</label
+            >
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="number"
+              required
+              placeholder="+91 82683-74913"
+              id="mobileNumber"
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-300" for="address"
+            >Address</label
+          >
+          <textarea
+            class="rounded border-1 bg-indigo-600 p-1 w-full"
+            name="Student Address"
+            id="address"
+            rows="5"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-between items-end relative my-3">
+          <p class="font-bold text-gray-100 text-sm">Education Info.</p>
+          <hr
+            class="border border-t-1 border-gray-300 border-gray-300 w-full absolute"
+          />
+        </div>
+
+        <div class="flex gap-x-2">
+          <div>
+            <label class="block text-sm text-gray-300" for="course"
+              >Course</label
+            >
+            <select
+              class="rounded border-1 bg-indigo-600 p-1"
+              name="Course"
+              id="course"
+            >
+              <option value="BCA">BCA</option>
+              <option value="B.Tech">B.Tech</option>
+              <option value="B.Sc">B.Sc</option>
+              <option value="B.Com">B.Com</option>
+              <option value="BBA">BBA</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300" for="rollNumber"
+              >Roll no.</label
+            >
+            <input
+              class="rounded border-1 bg-indigo-600 p-1"
+              type="number"
+              required
+              placeholder="5 digits roll no."
+              id="rollNumber"
+            />
+          </div>
+        </div>
+        <hr class="border border-t-1 my-3" />
+        <input
+          class="btn rounded bg-white px-5 py-1 font-semibold text-black"
+          type="button"
+          value="register"
+          onclick="submitForm()"
+        />
+        <input
+          class="btn rounded bg-indigo-400 px-5 py-1"
+          type="reset"
+          value="Reset"
+        />
+      </form>
+
+      <div id="studentDetails"></div>
+    </div>
+  </body>
+  <script>
+    const studentDetails = document.getElementById("studentDetails");
+    const from = document.getElementById("studentForm");
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+
+    const gender = document.querySelector('input[type="radio"]:checked');
+    console.log("Gender is :- ",gender.value);
+
+    const gender2 = document.querySelector('input[name="Gender"]:checked');
+    console.log("Gender is :- ",gender2.value);
+
+    const dob = document.getElementById("dob");
+    const fatherName = document.getElementById("fatherName");
+    const email = document.getElementById("email");
+    const mobileNumber = document.getElementById("mobileNumber");
+    const address = document.getElementById("address");
+    const course = document.getElementById("course");
+    const rollNumber = document.getElementById("rollNumber");
+
+    const submitForm = () => {
+      from.style.display = "none";
+      //  console.log(gender.value);
+      studentDetails.innerHTML = `
+  <table class="text-black border border-black rounded-2xl w-full">
+  <thead class="bg-indigo-500 text-white">
+    <tr>
+      <th class="text-sm px-4 py-2 text-left">Label</th>
+      <th class="text-sm px-4 py-2 text-left">Value</th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-600">
+    
+    <!-- Personal Info Header -->
+    <tr class="bg-gray-400 text-white text-center">
+      <td class="text-sm font-semibold px-4 py-2" colspan="2">Personal Info</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Name</td>
+      <td class="px-4 py-2">${firstName.value} ${lastName.value}</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Father's Name</td>
+      <td class="px-4 py-2">${fatherName.value}</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">DOB</td>
+      <td class="px-4 py-2 text-black">${dob.value}</td>
+    </tr>
+
+    <!-- Contact Info Header -->
+    <tr class="bg-gray-400 text-white text-center">
+      <td class="text-sm font-semibold px-4 py-2" colspan="2">Contact Info</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Email</td>
+      <td class="px-4 py-2">${email.value}</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Mobile Number</td>
+      <td class="px-4 py-2">${mobileNumber.value}</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Address</td>
+      <td class="px-4 py-2">${address.value}</td>
+    </tr>
+
+    <!-- Education Info Header -->
+    <tr class="bg-gray-400 text-white text-center">
+      <td class="text-sm font-semibold px-4 py-2" colspan="2">Education Info</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Course</td>
+      <td class="px-4 py-2">${course.value}</td>
+    </tr>
+    <tr class="hover:bg-gray-300">
+      <td class="px-4 py-2">Roll Number</td>
+      <td class="px-4 py-2">${rollNumber.value}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+  `;
+      //   console.log(firstName.value);
+      // console.log(lastName.value);
+      // console.log(gender.value);
+      // console.log(dob.value);
+      // console.log(fatherName.value);
+      // console.log(email.value);
+      // console.log(mobileNumber.value);
+      // console.log(address.value);
+      // console.log(course.value);
+      // console.log(rollNumber.value);
+      // console.log("form content :",firstName, lastName,gender,dob, fatherName,email,mobileNumber,address,course,rollNumber)
+    };
+  </script>
+</html>

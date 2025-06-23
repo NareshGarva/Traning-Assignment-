@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+    <table border="1" align="center">
+        <tbody>
+            <tr><td><label for="productName">Product Name:</label></td><td><input id="productName" type="text" placeholder="product name..." required></td></tr>
+            <tr><td><label for="productPrice">Product Price:</label></td><td><input id="productPrice" type="tel" placeholder="product price..." required></td></tr>
+            <tr><td><label for="productQuantity">Product Quantity:</label></td><td><input id="productQuantity" type="tel" placeholder="product Quantity..." required></td></tr>
+            <tr><td colspan="2" ><input onclick="getdata()" id="addBtn" type="button" value="Add product"></td></tr>
+        </tbody>
+    </table>
+    </form>
+    <div id="productList">
+    </div>
+</body>
+<script>
+    
+    let product_names = new Array();
+    let product_price = new Array();
+    let product_quantity = new Array();
+    // let productId = 0;
+    
+    const productName = document.getElementById("productName");
+   const productPrice = document.getElementById("productPrice");
+   const productQuantity = document.getElementById("productQuantity");
+   const productList = document.getElementById("productList");
+   const addBtn = document.getElementById("addBtn");
+   let iseditId = 0;
+
+const deleteProduct = (id) =>{
+for(let i=0;i<=product_names.length-1;i++){
+product_names[id-1] = product_names[id];
+product_names.pop(id);
+product_price[id-1] = product_price[id];
+product_price.pop(id);
+product_quantity[id-1] = product_quantity[id];
+product_quantity.pop(id);
+}
+randerTable();
+}
+
+
+   const printTable = () =>{
+    const win = window.open('','', 'height=600,width=800');
+    win.document.write(productList.innerHTML);
+    win.document.close();
+    win.print();
+   }
+
+   const editProduct = (id) =>{
+    console.log(id)
+    iseditId = id;
+    productName.value = product_names[id-1];
+    productPrice.value = product_price[id-1];
+    productQuantity.value = product_quantity[id-1];
+    if(addBtn.value === "Add product"){
+        addBtn.value = "Update product";
+    }
+}
+
+
+   const getdata = () =>{
+    if(iseditId){
+        console.log("come")
+        product_names[iseditId-1] = productName.value;
+        product_price[iseditId-1] = productPrice.value;
+        product_quantity[iseditId-1] = productQuantity.value;
+        addBtn.value = "Add product";
+        iseditId = 0;
+    }else{
+        console.log("not come")
+    product_names.push(productName.value);
+    product_price.push(productPrice.value);
+    product_quantity.push(productQuantity.value);
+    }
+
+    randerTable();
+   }
+
+   const randerTable = () =>{
+        const thead = "<thead><tr><td>Serial No.</td><td>Product Name</td><td>Product Price</td><td>Product Quantity</td><td>edit</td></tr></thead>"
+   let tbody ='';
+    for(let i=0;i<product_names.length;i++){
+   tbody += "<><td>"+(i+1)+"</td>";
+   tbody += "<td>"+product_names[i]+"</td>";
+   tbody +="<td>"+product_price[i]+"</td>";
+   tbody +="<td>"+product_quantity[i]+"</td>";
+   tbody += '<td colspan="2" align="center">';
+    tbody +=`<button onclick="editProduct(${i+1})">Edit</button>`+"</td>";
+    tbody += '<td colspan="2" align="center">';
+    tbody +=`<button onclick="deleteProduct(${i+1})">Delete</button>`+"</td></tr>";
+   }
+
+   tbody += `<tr><td><button onclick="printTable()">Print</button></td></tr>`
+
+      productList.innerHTML = `
+    <table  border="1" align="center" style="margin-top: 20px">
+        ${thead}
+        <tbody>
+            ${tbody}
+        </tbody>
+    </table>
+    `;
+   }
+
+
+   
+
+</script>
+</html>
